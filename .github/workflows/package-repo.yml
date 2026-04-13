@@ -6,6 +6,10 @@ on:
       - main
     paths:
       - 'incoming/**'
+      - 'docs/**'
+      - 'site/**'
+      - 'scripts/**'
+      - '.github/workflows/package-repo.yml'
   workflow_dispatch:
 
 jobs:
@@ -39,6 +43,7 @@ jobs:
       - name: Prepare Deployment
         run: |
           mkdir -p dist/site dist/docs dist/repo
+          touch dist/.nojekyll
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json
           cp -r repo/* dist/repo/

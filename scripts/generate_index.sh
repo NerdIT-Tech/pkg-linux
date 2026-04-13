@@ -8,43 +8,44 @@ BASE_DIR="$(dirname "$SCRIPT_DIR")"
 REPO_DIR="$BASE_DIR/repo"
 OUTPUT_FILE="$BASE_DIR/site/packages.json"
 
-echo "[" > "$OUTPUT_FILE"
-FIRST=true
+echo "Generating package index..."
+
+# Use a temporary file to build the JSON array entries
+TEMP_FILE=$(mktemp)
+echo "" > "$TEMP_FILE"
 
 # Find Debian packages
-find "$REPO_DIR/debian" -name "*.deb" | while read -r file; do
-    if [ "$FIRST" = true ]; then FIRST=false; else echo "," >> "$OUTPUT_FILE"; fi
+while read -r file; do
+    [ -z "$file" ] && continue
     filename=$(basename "$file")
-    # Debian format: name_version_arch.deb
     IFS='_' read -r name version arch_ext <<< "$filename"
     arch=${arch_ext%.deb}
-    echo "  {\"name\": \"$name\", \"version\": \"$version\", \"arch\": \"$arch\", \"dist\": \"debian\", \"url\": \"repo/debian/$filename\"}" >> "$OUTPUT_FILE"
-done
+    echo "  {\"name\": \"$name\", \"version\": \"$version\", \"arch\": \"$arch\", \"dist\": \"debian\", \"url\": \"repo/debian/$filename\"}" >> "$TEMP_FILE"
+done < <(find "$REPO_DIR/debian" -name "*.deb" 2>/dev/null)
 
 # Find RedHat packages
-find "$REPO_DIR/redhat" -name "*.rpm" | while read -r file; do
-    if [ "$FIRST" = true ]; then FIRST=false; else echo "," >> "$OUTPUT_FILE"; fi
+while read -r file; do
+    [ -z "$file" ] && continue
     filename=$(basename "$file")
-    # RedHat format: name-version-release.arch.rpm
-    # This is trickier, but let's do a simple split
     name_version_release_arch=${filename%.rpm}
-    # Usually: last part is arch, second to last is release+version
     arch=${name_version_release_arch##*.}
     name_v_r=${name_version_release_arch%.*}
-    # Simplified version for now
-    echo "  {\"name\": \"$name_v_r\", \"version\": \"unknown\", \"arch\": \"$arch\", \"dist\": \"redhat\", \"url\": \"repo/redhat/$filename\"}" >> "$OUTPUT_FILE"
-done
+    echo "  {\"name\": \"$name_v_r\", \"version\": \"unknown\", \"arch\": \"$arch\", \"dist\": \"redhat\", \"url\": \"repo/redhat/$filename\"}" >> "$TEMP_FILE"
+done < <(find "$REPO_DIR/redhat" -name "*.rpm" 2>/dev/null)
 
 # Find Alpine packages
-find "$REPO_DIR/alpine" -name "*.apk" | while read -r file; do
-    if [ "$FIRST" = true ]; then FIRST=false; else echo "," >> "$OUTPUT_FILE"; fi
+while read -r file; do
+    [ -z "$file" ] && continue
     filename=$(basename "$file")
-    # Alpine format: name-version.apk
     name_version=${filename%.apk}
-    echo "  {\"name\": \"$name_version\", \"version\": \"unknown\", \"arch\": \"unknown\", \"dist\": \"alpine\", \"url\": \"repo/alpine/$filename\"}" >> "$OUTPUT_FILE"
-done
+    echo "  {\"name\": \"$name_version\", \"version\": \"unknown\", \"arch\": \"unknown\", \"dist\": \"alpine\", \"url\": \"repo/alpine/$filename\"}" >> "$TEMP_FILE"
+done < <(find "$REPO_DIR/alpine" -name "*.apk" 2>/dev/null)
 
-echo "" >> "$OUTPUT_FILE"
+# Now assemble the final JSON
+echo "[" > "$OUTPUT_FILE"
+# Filter out empty lines and then join with commas
+grep "{" "$TEMP_FILE" | sed '$!s/$/,/' >> "$OUTPUT_FILE"
 echo "]" >> "$OUTPUT_FILE"
 
+rm "$TEMP_FILE"
 echo "Generated $OUTPUT_FILE"
