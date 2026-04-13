@@ -72,6 +72,11 @@ jobs:
           echo "Preparing deployment directory..."
           mkdir -p dist/site dist/docs dist/repo
           
+          # Disable Jekyll and ensure all files are included
+          echo "include: [\"repo\", \"docs\", \"site\"]" > dist/_config.yml
+          echo "jekyll: false" >> dist/_config.yml
+          touch dist/.nojekyll
+          
           # Copy static site files
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json

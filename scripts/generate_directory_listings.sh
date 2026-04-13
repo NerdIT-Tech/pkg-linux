@@ -18,7 +18,7 @@ generate_index() {
     local display_path="repo"
     [ -n "$rel_to_root" ] && display_path="repo/$rel_to_root"
     
-    echo "Generating index for $display_path..."
+    echo "Processing directory: $display_path"
     
     # Header
     cat <<EOF > "$dir/index.html"
@@ -52,7 +52,6 @@ EOF
         echo "        <li class=\"back\"><a href=\"../\">Parent Directory</a></li>" >> "$dir/index.html"
     fi
 
-    # Combined listing to ensure everything is visible
     # 1. Directories
     find "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '*/.*' | sort | while read -r d; do
         name=$(basename "$d")
@@ -62,6 +61,7 @@ EOF
     # 2. Files
     find "$dir" -mindepth 1 -maxdepth 1 -type f -not -name "index.html" -not -name ".*" | sort | while read -r f; do
         name=$(basename "$f")
+        echo "Found file: $name"
         echo "        <li class=\"file\"><a href=\"$name\">$name</a></li>" >> "$dir/index.html"
     done
 
@@ -75,7 +75,6 @@ EOF
 }
 
 # Recursively generate indexes
-# Use a temporary file to store directory list to avoid find finding its own newly created index.html
 DIRS_FILE=$(mktemp)
 find "$REPO_ROOT" -type d -not -path '*/.*' > "$DIRS_FILE"
 
