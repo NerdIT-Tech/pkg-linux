@@ -10,12 +10,12 @@ on:
       - 'site/**'
       - 'scripts/**'
       - '.github/workflows/package-repo.yml'
+      - 'mkdocs.yml'
   workflow_dispatch:
 
 jobs:
   process-packages:
     runs-on: ubuntu-latest
-    environment: production
     steps:
       - name: Checkout Repository (main)
         uses: actions/checkout@v3
@@ -32,16 +32,11 @@ jobs:
           mkdir -p repo
           if [ -d "old-gh-pages/repo" ]; then
             echo "Syncing existing repository state from gh-pages..."
-            # Using rsync if available, otherwise cp -rp
             if command -v rsync >/dev/null 2>&1; then
               rsync -av old-gh-pages/repo/ repo/
             else
               cp -rp old-gh-pages/repo/. repo/
             fi
-            echo "Current repo structure after sync:"
-            find repo -maxdepth 2
-          else
-            echo "No existing repository found on gh-pages branch."
           fi
           rm -rf old-gh-pages
 
@@ -50,11 +45,20 @@ jobs:
           chmod +x scripts/*.sh
           ./scripts/process_incoming.sh
 
-      - name: Install Tools
+      - name: Install Repo Tools
         run: |
           sudo apt-get update
           sudo apt-get install -y apt-utils createrepo-c
-          # Alpine tools would be installed here or run in a container
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Re-index Repository
         run: ./scripts/re-index.sh
@@ -68,54 +72,31 @@ jobs:
           RSA_PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
         run: ./scripts/sign-repo.sh
 
-      - name: Prepare Deployment
+      - name: Build Documentation (MkDocs)
         run: |
-          echo "Preparing deployment directory..."
-          mkdir -p dist/site dist/docs dist/repo
-          
-          # Disable Jekyll and ensure all files are included
-          echo "include: [\"repo\", \"docs\", \"site\"]" > dist/_config.yml
-          echo "jekyll: false" >> dist/_config.yml
-          touch dist/.nojekyll
-          
-          # Copy static site files
-          cp site/index.html dist/index.html
-          cp site/packages.json dist/site/packages.json
-          
-          # Copy repository contents (including synced and new packages)
+          mkdocs build --site-dir dist
+
+      - name: Prepare Repository Deployment
+        run: |
+          # Copy repository contents into the built site
+          mkdir -p dist/repo dist/site
           cp -rp repo/. dist/repo/
           
-          # Copy documentation
-          cp -rp docs/. dist/docs/
+          # Move packages.json to the location expected by the search script
+          cp site/packages.json dist/site/packages.json
           
-          # Generate HTML directory indexes for the dist/repo/ directory
-          chmod +x scripts/generate_directory_listings.sh
+          # Generate HTML directory indexes for the repo portion
           ./scripts/generate_directory_listings.sh dist/repo/
           
-          # Copy public keys to root for easy user access
+          # Copy public keys for easy access
           cp repo/public.gpg dist/public.gpg 2>/dev/null || true
           cp repo/public.asc dist/public.asc 2>/dev/null || true
           cp repo/alpine.rsa.pub dist/alpine.rsa.pub 2>/dev/null || true
           
-          echo "Final structure of dist directory ready for deployment:"
-          find dist -maxdepth 3
+          # Explicitly disable Jekyll for the final deployment
+          echo "jekyll: false" > dist/_config.yml
+          touch dist/.nojekyll
 
-      - name: Verify Deployment Structure
+      - name: Deploy documentation
         run: |
-          if [ ! -f dist/repo/index.html ]; then
-            echo "Error: dist/repo/index.html was not generated!"
-            exit 1
-          fi
-          # Check if at least one distribution directory has an index.html
-          if [ ! -f dist/repo/debian/index.html ] && [ ! -f dist/repo/redhat/index.html ] && [ ! -f dist/repo/alpine/index.html ]; then
-             echo "Warning: No distribution index.html found. Repository might be empty."
-          fi
-          echo "Verification successful."
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
-          enable_jekyll: false
+          mkdocs gh-deploy --force

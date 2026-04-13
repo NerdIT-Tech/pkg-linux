@@ -1,0 +1,34 @@
+site_name: Package Linux Repository
+site_description: A self-maintaining Linux package repository for Debian, RedHat, and Alpine.
+site_url: https://nerdit-tech.github.io/pkg-linux/
+
+theme:
+  name: material
+  palette:
+    primary: teal
+    accent: cyan
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - search.suggest
+    - search.highlight
+
+nav:
+  - Getting Started:
+    - Architecture: dev/architecture.md
+    - Automation: dev/automation.md
+    - Workflows: dev/workflows.md
+    - PR Submission: dev/submission.md
+  - User Guides:
+    - Debian/Ubuntu: user/debian.md
+    - RedHat/CentOS/Fedora: user/redhat.md
+    - Alpine Linux: user/alpine.md
+  - Package Search: site/packages.md
+  - Browse Repository: repo/
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
