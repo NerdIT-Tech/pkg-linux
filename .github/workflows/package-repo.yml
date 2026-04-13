@@ -31,16 +31,12 @@ jobs:
           mkdir -p repo
           if [ -d "old-gh-pages/repo" ]; then
             echo "Syncing existing repository state from gh-pages..."
-            # Sync directories one by one, ensuring we don't overwrite newer public keys from main
-            for dist in debian redhat alpine; do
-              if [ -d "old-gh-pages/repo/$dist" ]; then
-                echo "Syncing $dist..."
-                cp -rp "old-gh-pages/repo/$dist" repo/
-              fi
-            done
+            # Copy all contents from old repo to new repo dir
+            cp -rp old-gh-pages/repo/. repo/
+            echo "Current repo structure after sync:"
             ls -R repo/
           else
-            echo "No existing repository found on gh-pages branch or branch does not exist yet."
+            echo "No existing repository found on gh-pages branch."
           fi
           rm -rf old-gh-pages
 
@@ -76,11 +72,11 @@ jobs:
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json
           
-          # Copy repository contents
-          cp -rp repo/* dist/repo/
+          # Copy repository contents (including synced and new packages)
+          cp -rp repo/. dist/repo/
           
           # Copy documentation
-          cp -rp docs/* dist/docs/
+          cp -rp docs/. dist/docs/
           
           # Generate HTML directory indexes for the dist/repo/ directory
           chmod +x scripts/generate_directory_listings.sh
@@ -91,8 +87,8 @@ jobs:
           cp repo/public.asc dist/public.asc 2>/dev/null || true
           cp repo/alpine.rsa.pub dist/alpine.rsa.pub 2>/dev/null || true
           
-          echo "Deployment preparation complete. Final structure of dist/repo:"
-          ls -R dist/repo
+          echo "Final structure of dist directory ready for deployment:"
+          ls -R dist/
 
       - name: Verify Deployment Structure
         run: |
