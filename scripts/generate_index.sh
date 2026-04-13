@@ -3,8 +3,10 @@
 # scripts/generate_index.sh
 # Generates site/packages.json with a list of all packages in the repo/ directory.
 
-REPO_DIR="/workspaces/pkg-linux/repo"
-OUTPUT_FILE="/workspaces/pkg-linux/site/packages.json"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_DIR="$BASE_DIR/repo"
+OUTPUT_FILE="$BASE_DIR/site/packages.json"
 
 echo "[" > "$OUTPUT_FILE"
 FIRST=true

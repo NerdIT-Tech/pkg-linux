@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
-REPO_ROOT="/workspaces/pkg-linux/repo"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="$BASE_DIR/repo"
 mkdir -p "$REPO_ROOT"
 
 echo "Checking for repository signing keys..."

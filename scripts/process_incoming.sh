@@ -2,9 +2,11 @@
 set -e
 
 # Define root paths
-REPO_ROOT="/workspaces/pkg-linux/repo"
-INCOMING_ROOT="/workspaces/pkg-linux/incoming"
-SCRIPTS_DIR="/workspaces/pkg-linux/scripts"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASE_DIR="$(dirname "$SCRIPT_DIR")"
+REPO_ROOT="$BASE_DIR/repo"
+INCOMING_ROOT="$BASE_DIR/incoming"
+SCRIPTS_DIR="$BASE_DIR/scripts"
 
 echo "----------------------------------------------------"
 echo "Processing incoming packages..."
