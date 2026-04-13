@@ -45,6 +45,7 @@ jobs:
           mkdir -p dist/site dist/docs dist/repo
           touch dist/.nojekyll
           # Generate HTML directory indexes for the repo/ directory
+          chmod +x scripts/generate_directory_listings.sh
           ./scripts/generate_directory_listings.sh repo/
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json
@@ -54,6 +55,15 @@ jobs:
           cp repo/public.gpg dist/public.gpg 2>/dev/null || true
           cp repo/public.asc dist/public.asc 2>/dev/null || true
           cp repo/alpine.rsa.pub dist/alpine.rsa.pub 2>/dev/null || true
+
+      - name: Verify Deployment Structure
+        run: |
+          echo "Verifying dist structure..."
+          ls -R dist/repo | grep index.html
+          if [ ! -f dist/repo/index.html ]; then
+            echo "Error: dist/repo/index.html missing!"
+            exit 1
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
