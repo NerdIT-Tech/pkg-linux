@@ -1,0 +1,16 @@
+Package: odc
+Architecture: amd64
+Version: 0.1.0~rc26
+Priority: optional
+Maintainer: michaeldcanady <michaeldcanady@gmail.com>
+Installed-Size: 33868
+Filename: ./odc_linux_amd64.deb
+Size: 9143206
+MD5sum: 4207d8d2f456bfcbecb297063f7fdedd
+SHA1: 74db227e8c68909b2ac413997e03d63a46f31faa
+SHA256: 093ace9ae632bdd78a577245f1a8fb112b883609cd1cff720c98c6b4bdf6e13a
+SHA512: 509b0f58a164ca04947fa7ad185eae47d3422fcd4d54d8b12cb2eb538c58cc8290938da12b68c595e53c4f38b2b9e593dda90f4bbc42b244a83892a6929052c7
+Homepage: https://github.com/michaeldcanady/go-onedrive
+Description: odc is a CLI tool designed to interact with OneDrive as a Unix-style file system.
+Architecture-Variant: amd64v1
+

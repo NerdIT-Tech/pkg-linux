@@ -1,0 +1,5 @@
+[
+  {"name": "odc", "version": "linux", "arch": "amd64", "dist": "debian", "url": "repo/debian/odc_linux_amd64.deb"},
+  {"name": "odc_linux_amd64", "version": "unknown", "arch": "odc_linux_amd64", "dist": "redhat", "url": "repo/redhat/odc_linux_amd64.rpm"},
+  {"name": "odc-0.1.0_rc26", "version": "unknown", "arch": "unknown", "dist": "alpine", "url": "repo/alpine/odc-0.1.0_rc26.apk"}
+]
