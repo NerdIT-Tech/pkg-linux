@@ -41,7 +41,7 @@ Search for available packages across all supported distributions.
     var searchInput = document.getElementById('package-search');
     if (searchInput) {
       // Use absolute path from site root
-      fetch('/pkg-linux/site/packages.json')
+      fetch('/pkg-linux/data/packages.json')
         .then(response => response.json())
         .then(packages => {
           window.allPackages = packages;

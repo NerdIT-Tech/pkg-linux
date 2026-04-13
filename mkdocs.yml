@@ -23,7 +23,7 @@ nav:
     - Debian/Ubuntu: user/debian.md
     - RedHat/CentOS/Fedora: user/redhat.md
     - Alpine Linux: user/alpine.md
-  - Package Search: site/packages.md
+  - Package Search: packages.md
   - Browse Repository: repo/
 
 markdown_extensions:

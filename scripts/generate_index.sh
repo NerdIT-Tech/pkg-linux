@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # scripts/generate_index.sh
-# Generates site/packages.json with a list of all packages in the repo/ directory.
+# Generates data/packages.json with a list of all packages in the repo/ directory.
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BASE_DIR="$(dirname "$SCRIPT_DIR")"
 REPO_DIR="$BASE_DIR/repo"
-OUTPUT_FILE="$BASE_DIR/site/packages.json"
+OUTPUT_FILE="$BASE_DIR/data/packages.json"
 
 echo "Generating package index..."
 
