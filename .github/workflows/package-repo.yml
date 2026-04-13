@@ -31,10 +31,14 @@ jobs:
           mkdir -p repo
           if [ -d "old-gh-pages/repo" ]; then
             echo "Syncing existing repository state from gh-pages..."
-            # Copy all contents from old repo to new repo dir
-            cp -rp old-gh-pages/repo/. repo/
+            # Using rsync if available, otherwise cp -rp
+            if command -v rsync >/dev/null 2>&1; then
+              rsync -av old-gh-pages/repo/ repo/
+            else
+              cp -rp old-gh-pages/repo/. repo/
+            fi
             echo "Current repo structure after sync:"
-            ls -R repo/
+            find repo -maxdepth 2
           else
             echo "No existing repository found on gh-pages branch."
           fi
@@ -88,13 +92,17 @@ jobs:
           cp repo/alpine.rsa.pub dist/alpine.rsa.pub 2>/dev/null || true
           
           echo "Final structure of dist directory ready for deployment:"
-          ls -R dist/
+          find dist -maxdepth 3
 
       - name: Verify Deployment Structure
         run: |
           if [ ! -f dist/repo/index.html ]; then
             echo "Error: dist/repo/index.html was not generated!"
             exit 1
+          fi
+          # Check if at least one distribution directory has an index.html
+          if [ ! -f dist/repo/debian/index.html ] && [ ! -f dist/repo/redhat/index.html ] && [ ! -f dist/repo/alpine/index.html ]; then
+             echo "Warning: No distribution index.html found. Repository might be empty."
           fi
           echo "Verification successful."
 
