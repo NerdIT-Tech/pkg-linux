@@ -1,1 +1,18 @@
-*.skill
+# Private Keys
+alpine.rsa
+gpg-batch
+
+# Repository Structure (Managed by CI, exists only in gh-pages)
+repo/debian/
+repo/redhat/
+repo/alpine/
+# Keep public keys in main
+!repo/*.gpg
+!repo/*.asc
+!repo/*.pub
+
+# Build artifacts
+dist/
+*.deb
+*.rpm
+*.apk
