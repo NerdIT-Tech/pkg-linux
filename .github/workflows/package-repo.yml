@@ -28,19 +28,21 @@ jobs:
 
       - name: Sync existing repository state
         run: |
-          if [ -d old-gh-pages/repo ]; then
+          mkdir -p repo
+          if [ -d "old-gh-pages/repo" ]; then
             echo "Syncing existing repository state from gh-pages..."
-            mkdir -p repo
-            # Use cp -r to merge existing repo contents into the current repo/ dir
-            # We skip the public keys as they are already in the main branch
-            cp -rn old-gh-pages/repo/debian repo/ 2>/dev/null || true
-            cp -rn old-gh-pages/repo/redhat repo/ 2>/dev/null || true
-            cp -rn old-gh-pages/repo/alpine repo/ 2>/dev/null || true
-            # Clean up old-gh-pages to avoid conflicts
-            rm -rf old-gh-pages
+            # Sync directories one by one, ensuring we don't overwrite newer public keys from main
+            for dist in debian redhat alpine; do
+              if [ -d "old-gh-pages/repo/$dist" ]; then
+                echo "Syncing $dist..."
+                cp -rp "old-gh-pages/repo/$dist" repo/
+              fi
+            done
+            ls -R repo/
           else
-            echo "No existing repository found on gh-pages."
+            echo "No existing repository found on gh-pages branch or branch does not exist yet."
           fi
+          rm -rf old-gh-pages
 
       - name: Process Incoming Packages
         run: |
@@ -67,29 +69,38 @@ jobs:
 
       - name: Prepare Deployment
         run: |
+          echo "Preparing deployment directory..."
           mkdir -p dist/site dist/docs dist/repo
-          touch dist/.nojekyll
-          # Copy files first
+          
+          # Copy static site files
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json
-          cp -r repo/* dist/repo/
-          cp -r docs/* dist/docs/
+          
+          # Copy repository contents
+          cp -rp repo/* dist/repo/
+          
+          # Copy documentation
+          cp -rp docs/* dist/docs/
+          
           # Generate HTML directory indexes for the dist/repo/ directory
           chmod +x scripts/generate_directory_listings.sh
           ./scripts/generate_directory_listings.sh dist/repo/
-          # Copy public keys to root for easy user access as per docs
+          
+          # Copy public keys to root for easy user access
           cp repo/public.gpg dist/public.gpg 2>/dev/null || true
           cp repo/public.asc dist/public.asc 2>/dev/null || true
           cp repo/alpine.rsa.pub dist/alpine.rsa.pub 2>/dev/null || true
+          
+          echo "Deployment preparation complete. Final structure of dist/repo:"
+          ls -R dist/repo
 
       - name: Verify Deployment Structure
         run: |
-          echo "Verifying dist structure..."
-          ls -R dist/repo | grep index.html || (echo "Warning: no index.html found" && exit 0)
           if [ ! -f dist/repo/index.html ]; then
-            echo "Error: dist/repo/index.html missing!"
+            echo "Error: dist/repo/index.html was not generated!"
             exit 1
           fi
+          echo "Verification successful."
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -97,3 +108,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           publish_branch: gh-pages
+          enable_jekyll: false
