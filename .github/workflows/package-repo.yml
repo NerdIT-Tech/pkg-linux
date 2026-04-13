@@ -44,6 +44,8 @@ jobs:
         run: |
           mkdir -p dist/site dist/docs dist/repo
           touch dist/.nojekyll
+          # Generate HTML directory indexes for the repo/ directory
+          ./scripts/generate_directory_listings.sh repo/
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json
           cp -r repo/* dist/repo/
