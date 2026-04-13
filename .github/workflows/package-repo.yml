@@ -16,11 +16,36 @@ jobs:
   process-packages:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
+      - name: Checkout Repository (main)
         uses: actions/checkout@v3
 
+      - name: Checkout existing repo (gh-pages)
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: old-gh-pages
+        continue-on-error: true
+
+      - name: Sync existing repository state
+        run: |
+          if [ -d old-gh-pages/repo ]; then
+            echo "Syncing existing repository state from gh-pages..."
+            mkdir -p repo
+            # Use cp -r to merge existing repo contents into the current repo/ dir
+            # We skip the public keys as they are already in the main branch
+            cp -rn old-gh-pages/repo/debian repo/ 2>/dev/null || true
+            cp -rn old-gh-pages/repo/redhat repo/ 2>/dev/null || true
+            cp -rn old-gh-pages/repo/alpine repo/ 2>/dev/null || true
+            # Clean up old-gh-pages to avoid conflicts
+            rm -rf old-gh-pages
+          else
+            echo "No existing repository found on gh-pages."
+          fi
+
       - name: Process Incoming Packages
-        run: ./scripts/process_incoming.sh
+        run: |
+          chmod +x scripts/*.sh
+          ./scripts/process_incoming.sh
 
       - name: Install Tools
         run: |
@@ -44,13 +69,14 @@ jobs:
         run: |
           mkdir -p dist/site dist/docs dist/repo
           touch dist/.nojekyll
-          # Generate HTML directory indexes for the repo/ directory
-          chmod +x scripts/generate_directory_listings.sh
-          ./scripts/generate_directory_listings.sh repo/
+          # Copy files first
           cp site/index.html dist/index.html
           cp site/packages.json dist/site/packages.json
           cp -r repo/* dist/repo/
           cp -r docs/* dist/docs/
+          # Generate HTML directory indexes for the dist/repo/ directory
+          chmod +x scripts/generate_directory_listings.sh
+          ./scripts/generate_directory_listings.sh dist/repo/
           # Copy public keys to root for easy user access as per docs
           cp repo/public.gpg dist/public.gpg 2>/dev/null || true
           cp repo/public.asc dist/public.asc 2>/dev/null || true
@@ -59,7 +85,7 @@ jobs:
       - name: Verify Deployment Structure
         run: |
           echo "Verifying dist structure..."
-          ls -R dist/repo | grep index.html
+          ls -R dist/repo | grep index.html || (echo "Warning: no index.html found" && exit 0)
           if [ ! -f dist/repo/index.html ]; then
             echo "Error: dist/repo/index.html missing!"
             exit 1

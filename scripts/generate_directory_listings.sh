@@ -52,13 +52,14 @@ EOF
         echo "        <li class=\"back\"><a href=\"../\">Parent Directory</a></li>" >> "$dir/index.html"
     fi
 
-    # Directories
+    # Combined listing to ensure everything is visible
+    # 1. Directories
     find "$dir" -mindepth 1 -maxdepth 1 -type d -not -path '*/.*' | sort | while read -r d; do
         name=$(basename "$d")
         echo "        <li class=\"dir\"><a href=\"$name/\">$name/</a></li>" >> "$dir/index.html"
     done
 
-    # Files (excluding index.html and hidden files)
+    # 2. Files
     find "$dir" -mindepth 1 -maxdepth 1 -type f -not -name "index.html" -not -name ".*" | sort | while read -r f; do
         name=$(basename "$f")
         echo "        <li class=\"file\"><a href=\"$name\">$name</a></li>" >> "$dir/index.html"
@@ -74,6 +75,12 @@ EOF
 }
 
 # Recursively generate indexes
-find "$REPO_ROOT" -type d -not -path '*/.*' | while read -r directory; do
+# Use a temporary file to store directory list to avoid find finding its own newly created index.html
+DIRS_FILE=$(mktemp)
+find "$REPO_ROOT" -type d -not -path '*/.*' > "$DIRS_FILE"
+
+while read -r directory; do
     generate_index "$directory"
-done
+done < "$DIRS_FILE"
+
+rm "$DIRS_FILE"
