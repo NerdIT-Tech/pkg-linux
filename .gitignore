@@ -1,0 +1,14 @@
+# Private Keys
+alpine.rsa
+gpg-batch
+
+# Local repo files (if you want to keep them local-only, but usually we want to commit repo/ metadata)
+# repo/
+
+# Build artifacts
+*.deb
+*.rpm
+*.apk
+
+# OS files
+.DS_Store

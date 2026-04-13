@@ -1,0 +1,40 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/base:2-noble",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "go.toolsManagement.checkForUpdates": "local",
+        "go.useLanguageServer": true,
+        "go.gopath": "/go"
+      },
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "GitHub.vscode-pull-request-github",
+        "donjayamanne.githistory",
+        "waderyan.gitblame",
+        "streetsidesoftware.code-spell-checker",
+        "esbenp.prettier-vscode",
+        "usernamehw.errorlens",
+        "msyrus.go-doc",
+        "yzhang.markdown-all-in-one",
+        "Gruntfuggly.todo-tree"
+      ]
+    }
+  },
+  "remoteUser": "vscode",
+  "features": {
+    "./features/xdg-utils": {},
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    },
+    "ghcr.io/guiyomh/features/just:0": {},
+    "ghcr.io/devcontainers/features/powershell:2": {
+      "version": "latest"
+    },
+    "ghcr.io/stu-bell/devcontainer-features/gemini-cli:0": {}
+  },
+  "runArgs": [
+    "--userns=keep-id"
+  ],
+  "containerUser": "vscode"
+}

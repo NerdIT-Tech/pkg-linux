@@ -1,0 +1,23 @@
+name: Validate PR Packages
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'incoming/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Linting Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lintian rpmlint rpm
+
+      - name: Run Validation Script
+        run: bash scripts/validate_package.sh

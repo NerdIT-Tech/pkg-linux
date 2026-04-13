@@ -1,0 +1,56 @@
+name: Package Repository Manager
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'incoming/**'
+  workflow_dispatch:
+
+jobs:
+  process-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Process Incoming Packages
+        run: ./scripts/process_incoming.sh
+
+      - name: Install Tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y apt-utils createrepo-c
+          # Alpine tools would be installed here or run in a container
+
+      - name: Re-index Repository
+        run: ./scripts/re-index.sh
+
+      - name: Generate Package Index
+        run: ./scripts/generate_index.sh
+
+      - name: Sign Repository
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          RSA_PRIVATE_KEY: ${{ secrets.RSA_PRIVATE_KEY }}
+        run: ./scripts/sign-repo.sh
+
+      - name: Prepare Deployment
+        run: |
+          mkdir -p dist/site dist/docs dist/repo
+          cp site/index.html dist/index.html
+          cp site/packages.json dist/site/packages.json
+          cp -r repo/* dist/repo/
+          cp -r docs/* dist/docs/
+          # Copy public keys to root for easy user access as per docs
+          cp repo/public.gpg dist/public.gpg 2>/dev/null || true
+          cp repo/public.asc dist/public.asc 2>/dev/null || true
+          cp repo/alpine.rsa.pub dist/alpine.rsa.pub 2>/dev/null || true
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Package Linux Repository</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="A self-maintaining Linux package repository for Debian, RedHat, and Alpine.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    .package-search-container {
+      margin-top: 20px;
+      padding: 10px;
+    }
+    #package-search {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    #package-results {
+      margin-top: 20px;
+    }
+    .package-card {
+      border: 1px solid #eee;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    .package-name {
+      font-weight: bold;
+      color: #42b983;
+      font-size: 18px;
+    }
+    .package-dist {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-left: 10px;
+      background: #e7f6f1;
+      color: #42b983;
+    }
+    .package-meta {
+      font-size: 14px;
+      color: #666;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">Loading...</div>
+  <script>
+    window.$docsify = {
+      name: 'Package Linux Repository',
+      repo: 'https://github.com/your-username/pkg-linux',
+      loadSidebar: true,
+      subMaxLevel: 2,
+      basePath: 'docs/',
+      homepage: 'dev/architecture.md',
+      plugins: [
+        function(hook, vm) {
+          hook.afterEach(function(html, next) {
+            if (vm.route.path === '/site/packages') {
+              var searchHtml = `
+                <div class="package-search-container">
+                  <input type="text" id="package-search" placeholder="Search for packages (e.g., git, curl)...">
+                  <div id="package-results">Loading packages...</div>
+                </div>
+              `;
+              next(html + searchHtml);
+            } else {
+              next(html);
+            }
+          });
+
+          hook.doneEach(function() {
+            var searchInput = document.getElementById('package-search');
+            if (searchInput) {
+              fetch('site/packages.json')
+                .then(response => response.json())
+                .then(packages => {
+                  window.allPackages = packages;
+                  renderPackages(packages);
+                  
+                  searchInput.addEventListener('input', function() {
+                    var query = this.value.toLowerCase();
+                    var filtered = window.allPackages.filter(p => 
+                      p.name.toLowerCase().includes(query) || 
+                      p.dist.toLowerCase().includes(query)
+                    );
+                    renderPackages(filtered);
+                  });
+                })
+                .catch(err => {
+                  document.getElementById('package-results').innerHTML = 'No packages found or failed to load site/packages.json.';
+                  console.error(err);
+                });
+            }
+          });
+
+          function renderPackages(packages) {
+            var resultsDiv = document.getElementById('package-results');
+            if (!resultsDiv) return;
+            
+            if (packages.length === 0) {
+              resultsDiv.innerHTML = '<p>No packages found.</p>';
+              return;
+            }
+
+            var html = packages.map(p => `
+              <div class="package-card">
+                <div><span class="package-name">${p.name}</span> <span class="package-dist">${p.dist}</span></div>
+                <div class="package-meta">Version: ${p.version} | Arch: ${p.arch}</div>
+                <div class="package-meta">Path: <code>${p.url}</code></div>
+              </div>
+            `).join('');
+            resultsDiv.innerHTML = html;
+          }
+        }
+      ]
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+    "id": "xdg-utils",
+    "version": "1.0.0",
+    "name": "XDG Utils",
+    "description": "Installs xdg utils.",
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
