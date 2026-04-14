@@ -20,3 +20,4 @@ sudo apk add [package-name]
 
 ---
 *For a list of available packages, visit the [Package Search](../packages.md) page.*
+
