@@ -10,14 +10,14 @@ Create a new repository configuration file in `/etc/yum.repos.d/pkg-linux.repo`:
 sudo tee /etc/yum.repos.d/pkg-linux.repo <<EOF
 [pkg-linux]
 name=Package Linux Repository
-baseurl=https://your-username.github.io/pkg-linux/repo/redhat/
+baseurl=https://nerdit-tech.github.io/pkg-linux/repo/redhat/
 enabled=1
 gpgcheck=1
-gpgkey=https://your-username.github.io/pkg-linux/repo/redhat/RPM-GPG-KEY-pkg-linux
+gpgkey=https://nerdit-tech.github.io/pkg-linux/repo/public.gpg
 EOF
 ```
 
-*(Replace `your-username` with the actual GitHub username)*
+*(Note: We use the single repository public GPG key located at the repository root)*
 
 ## 2. Install Packages
 
@@ -36,5 +36,8 @@ sudo yum install <package-name>
 If the automatic GPG key import fails, you can manually import it:
 
 ```bash
-sudo rpm --import https://your-username.github.io/pkg-linux/repo/redhat/RPM-GPG-KEY-pkg-linux
+sudo rpm --import https://nerdit-tech.github.io/pkg-linux/repo/public.gpg
 ```
+
+---
+*For a list of available packages, visit the [Package Search](../packages.md) page.*

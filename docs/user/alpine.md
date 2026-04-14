@@ -4,12 +4,12 @@ To add this repository to your Alpine Linux installation, follow these steps:
 
 ### 1. Download and Trust the Repository Public Key
 ```bash
-sudo curl -fsSL https://[USER].github.io/[REPO]/alpine.rsa.pub -o /etc/apk/keys/repo@example.com.rsa.pub
+sudo curl -fsSL https://nerdit-tech.github.io/pkg-linux/repo/alpine.rsa.pub -o /etc/apk/keys/pkg-linux.rsa.pub
 ```
 
 ### 2. Add the Repository
 ```bash
-echo "https://[USER].github.io/[REPO]/alpine" | sudo tee -a /etc/apk/repositories
+echo "https://nerdit-tech.github.io/pkg-linux/repo/alpine" | sudo tee -a /etc/apk/repositories
 ```
 
 ### 3. Update and Install
@@ -19,4 +19,4 @@ sudo apk add [package-name]
 ```
 
 ---
-*Note: Replace `[USER]` and `[REPO]` with your actual GitHub username and repository name.*
+*For a list of available packages, visit the [Package Search](../packages.md) page.*

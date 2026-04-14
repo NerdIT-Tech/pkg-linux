@@ -1,19 +1,39 @@
 site_name: Package Linux Repository
 site_description: A self-maintaining Linux package repository for Debian, RedHat, and Alpine.
 site_url: https://nerdit-tech.github.io/pkg-linux/
+repo_url: https://github.com/nerdit-tech/pkg-linux
+repo_name: nerdit-tech/pkg-linux
 
 theme:
   name: material
   palette:
-    primary: teal
-    accent: cyan
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
   features:
     - navigation.tabs
     - navigation.sections
+    - navigation.expand
+    - navigation.top
     - search.suggest
     - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
 
 nav:
+  - Home: index.md
   - Getting Started:
     - Architecture: dev/architecture.md
     - Automation: dev/automation.md
@@ -24,7 +44,7 @@ nav:
     - RedHat/CentOS/Fedora: user/redhat.md
     - Alpine Linux: user/alpine.md
   - Package Search: packages.md
-  - Browse Repository: repo/
+  - Browse Repository: https://nerdit-tech.github.io/pkg-linux/repo/
 
 markdown_extensions:
   - admonition
@@ -32,3 +52,13 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.magiclink
