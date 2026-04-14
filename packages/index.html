@@ -62,6 +62,8 @@
   
     
     
+      
+    
     
     
     
@@ -116,7 +118,33 @@
     </div>
     
       
+        <form class="md-header__option" data-md-component="palette">
+  
     
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="cyan"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -138,6 +166,11 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
       </label>
       <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
         
         <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
           
@@ -163,6 +196,18 @@
       
     
     
+      <div class="md-header__source">
+        <a href="https://github.com/nerdit-tech/pkg-linux" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nerdit-tech/pkg-linux
+  </div>
+</a>
+      </div>
+    
   </nav>
   
 </header>
@@ -176,6 +221,25 @@
 <nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
   <div class="md-grid">
     <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
       
         
   
@@ -244,7 +308,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../repo/" class="md-tabs__link">
+      <a href="https://nerdit-tech.github.io/pkg-linux/repo/" class="md-tabs__link">
         
   
   
@@ -288,7 +352,46 @@
     Package Linux Repository
   </label>
   
+    <div class="md-nav__source">
+      <a href="https://github.com/nerdit-tech/pkg-linux" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    nerdit-tech/pkg-linux
+  </div>
+</a>
+    </div>
+  
   <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
     
       
       
@@ -310,10 +413,12 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -331,8 +436,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_1">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -481,10 +586,12 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
   
   
@@ -502,8 +609,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -648,7 +755,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../repo/" class="md-nav__link">
+      <a href="https://nerdit-tech.github.io/pkg-linux/repo/" class="md-nav__link">
         
   
   
@@ -702,83 +809,175 @@
                   
 
 
+  
+  
+
 
 <h1 id="package-search">Package Search</h1>
 <p>Search for available packages across all supported distributions.</p>
-<div class="package-search-container">
-  <input type="text" id="package-search" placeholder="Search for packages (e.g., git, curl)..." style="width: 100%; padding: 12px; font-size: 16px; border: 1px solid #ddd; border-radius: 8px;">
-  <div id="package-results" style="margin-top: 20px;">Loading packages...</div>
+<div class="md-main__inner md-typeset">
+  <div class="md-grid">
+    <div class="md-content">
+      <div class="package-filter-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;">
+        <div style="flex: 1; min-width: 250px;">
+          <input type="text" id="package-search" placeholder="Search by name..." class="md-input" style="width: 100%; height: 44px; padding: 0 16px; border: 1px solid var(--md-typeset-color--lightest); border-radius: 4px; background-color: var(--md-default-bg-color);">
+        </div>
+        <div style="width: 150px;">
+          <select id="dist-filter" class="md-input" style="width: 100%; height: 44px; padding: 0 8px; border: 1px solid var(--md-typeset-color--lightest); border-radius: 4px; background-color: var(--md-default-bg-color); color: var(--md-typeset-color);">
+            <option value="">All Distributions</option>
+            <option value="debian">Debian/Ubuntu</option>
+            <option value="redhat">RedHat/CentOS</option>
+            <option value="alpine">Alpine Linux</option>
+          </select>
+        </div>
+        <div style="width: 120px;">
+          <select id="arch-filter" class="md-input" style="width: 100%; height: 44px; padding: 0 8px; border: 1px solid var(--md-typeset-color--lightest); border-radius: 4px; background-color: var(--md-default-bg-color); color: var(--md-typeset-color);">
+            <option value="">All Arch</option>
+            <option value="amd64">amd64/x86_64</option>
+            <option value="arm64">arm64/aarch64</option>
+            <option value="i386">i386</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="package-results" class="md-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; padding: 0;">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+          <div class="md-status md-status--loading"></div>
+          <p>Loading packages metadata...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
     .package-card {
-      border: 1px solid #eee;
-      padding: 15px;
-      margin-bottom: 10px;
+      border: 1px solid var(--md-typeset-color--lightest);
+      padding: 16px;
       border-radius: 8px;
-      background: #fafafa;
+      background: var(--md-default-bg-color);
+      transition: box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .package-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border-color: var(--md-primary-fg-color);
+    }
+    .package-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
     }
     .package-name {
-      font-weight: bold;
-      color: #009688;
-      font-size: 18px;
+      font-weight: 700;
+      color: var(--md-primary-fg-color);
+      font-size: 1.1rem;
+      word-break: break-all;
     }
-    .package-dist {
-      display: inline-block;
+    .package-dist-badge {
       padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 12px;
-      margin-left: 10px;
-      background: #e7f6f1;
-      color: #009688;
+      border-radius: 12px;
+      font-size: 0.7rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      background: var(--md-primary-fg-color--transparent);
+      color: var(--md-primary-fg-color);
     }
     .package-meta {
-      font-size: 14px;
-      color: #666;
-      margin-top: 5px;
+      font-size: 0.85rem;
+      color: var(--md-typeset-color);
+      margin: 4px 0;
+    }
+    .package-url {
+      font-family: var(--md-code-font-family);
+      font-size: 0.75rem;
+      background: var(--md-code-bg-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+      word-break: break-all;
+      margin-top: 8px;
+      display: block;
+      color: var(--md-primary-fg-color);
+      text-decoration: none;
+    }
+    .package-url:hover {
+      text-decoration: underline;
+    }
+    .no-results {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 40px;
+      color: var(--md-typeset-color--light);
     }
 </style>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var searchInput = document.getElementById('package-search');
-    if (searchInput) {
+    var distFilter = document.getElementById('dist-filter');
+    var archFilter = document.getElementById('arch-filter');
+    var resultsDiv = document.getElementById('package-results');
+    var BASE_PATH = '/pkg-linux/';
+
+    if (searchInput && distFilter && archFilter) {
       // Use absolute path from site root
-      fetch('/pkg-linux/data/packages.json')
-        .then(response => response.json())
+      fetch(BASE_PATH + 'data/packages.json')
+        .then(response => {
+           if (!response.ok) throw new Error('Failed to load packages.json');
+           return response.json();
+        })
         .then(packages => {
           window.allPackages = packages;
-          renderPackages(packages);
 
-          searchInput.addEventListener('input', function() {
-            var query = this.value.toLowerCase();
-            var filtered = window.allPackages.filter(p => 
-              p.name.toLowerCase().includes(query) || 
-              p.dist.toLowerCase().includes(query)
-            );
+          function updateResults() {
+            var query = searchInput.value.toLowerCase();
+            var dist = distFilter.value.toLowerCase();
+            var arch = archFilter.value.toLowerCase();
+
+            var filtered = window.allPackages.filter(p => {
+              var matchesSearch = p.name.toLowerCase().includes(query) || 
+                                 (p.description && p.description.toLowerCase().includes(query));
+              var matchesDist = dist === "" || p.dist.toLowerCase().includes(dist);
+              var matchesArch = arch === "" || p.arch.toLowerCase().includes(arch);
+              return matchesSearch && matchesDist && matchesArch;
+            });
             renderPackages(filtered);
-          });
+          }
+
+          searchInput.addEventListener('input', updateResults);
+          distFilter.addEventListener('change', updateResults);
+          archFilter.addEventListener('change', updateResults);
+
+          updateResults();
         })
         .catch(err => {
-          document.getElementById('package-results').innerHTML = 'No packages found or failed to load packages metadata.';
+          resultsDiv.innerHTML = '<div class="no-results">Error: Could not load package data. Please ensure ' + BASE_PATH + 'data/packages.json is accessible.</div>';
           console.error(err);
         });
     }
 
     function renderPackages(packages) {
-      var resultsDiv = document.getElementById('package-results');
       if (!resultsDiv) return;
 
       if (packages.length === 0) {
-        resultsDiv.innerHTML = '<p>No packages found.</p>';
+        resultsDiv.innerHTML = '<div class="no-results">No packages found matching your criteria.</div>';
         return;
       }
 
       var html = packages.map(p => `
         <div class="package-card">
-          <div><span class="package-name">${p.name}</span> <span class="package-dist">${p.dist}</span></div>
-          <div class="package-meta">Version: ${p.version} | Arch: ${p.arch}</div>
-          <div class="package-meta">Path: <code>${p.url}</code></div>
+          <div class="package-header">
+            <span class="package-name">${p.name}</span>
+            <span class="package-dist-badge">${p.dist}</span>
+          </div>
+          <div>
+            <div class="package-meta"><strong>Version:</strong> ${p.version}</div>
+            <div class="package-meta"><strong>Architecture:</strong> ${p.arch}</div>
+            <a href="${BASE_PATH}${p.url}" class="package-url" target="_blank">${p.url}</a>
+          </div>
         </div>
       `).join('');
       resultsDiv.innerHTML = html;
@@ -804,6 +1003,12 @@
           
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
         
       </main>
       
@@ -834,7 +1039,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "search.suggest", "search.highlight"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
